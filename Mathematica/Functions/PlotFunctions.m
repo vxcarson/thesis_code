@@ -284,7 +284,7 @@ ButtonBar[{
 
 (* Summation Grid *)
 Grid[{{
-"Display:","Plot","\[Sum]","\!\(\*SubscriptBox[\(t\), \(1\)]\)                 \!\(\*SubscriptBox[\(t\), \(2\)]\)","\!\(\*SubscriptBox[\(t\), \(1\)]\)  -  \!\(\*SubscriptBox[\(t\), \(2\)]\)",(*Sum*)," Comparisons "
+"Display:","Plot","\[Sum]","\!\(\*SubscriptBox[\(t\), \(1\)]\)                 \!\(\*SubscriptBox[\(t\), \(2\)]\)","\!\(\*SubscriptBox[\(t\), \(1\)]\)  -  \!\(\*SubscriptBox[\(t\), \(2\)]\)",(*Sum*)Null," Comparisons "
 }}
 ~Join~
 (Function[plt,
@@ -324,7 +324,7 @@ PercentForm[N[sums[[plt]]/sums[[divisors[[plt]]]]],3],
 Row[{"Minimum Increment: ",RadioButtonBar[Dynamic[round],{0.1,1},ImageMargins->5]}](*,Dynamic[CurrentValue["ModifierKeys"]]Dynamic[dragging],Dynamic[activeEdge],Dynamic[diff],
 Dynamic[sums=sumPointsWithinRange[plotList[[#]],sumRanges[[#]]]&/@lenRange[sumRanges];
 ]*)
-,,
+,Null,Null
 },Alignment->Center]
 ]
 ]
@@ -459,7 +459,7 @@ ButtonBar[{
 
 (* Summation Grid *)
 Grid[{{
-"Display:","Plot","\[Sum]","\!\(\*SubscriptBox[\(t\), \(1\)]\)                 \!\(\*SubscriptBox[\(t\), \(2\)]\)","\!\(\*SubscriptBox[\(t\), \(1\)]\)  -  \!\(\*SubscriptBox[\(t\), \(2\)]\)",(*Sum*)," Comparisons "
+"Display:","Plot","\[Sum]","\!\(\*SubscriptBox[\(t\), \(1\)]\)                 \!\(\*SubscriptBox[\(t\), \(2\)]\)","\!\(\*SubscriptBox[\(t\), \(1\)]\)  -  \!\(\*SubscriptBox[\(t\), \(2\)]\)",(*Sum*)Null," Comparisons "
 }}
 ~Join~
 (Function[plt,

@@ -1,3 +1,5 @@
+(* ::Package:: *)
+
 (* print for variables when debugging *)
 SetAttributes[printVariable, HoldFirst]
 printVariable[variable_] := 
@@ -6,6 +8,16 @@ printVariable[variable_] :=
 
 (* Reflects a number "x" across "a" (e.g. reflect[8,3] == -2) *)
 reflect[x_, a_ : 0] := 2 a - x
+
+
+getKeyPaths[assoc_Association]:=
+Flatten[
+KeyValueMap[Function[{key,val},
+If[AssociationQ[val],
+Prepend[#,key]&/@getKeyPaths[val],
+{{key}}]
+],assoc],
+1]
 
 
 (* Tests to see if x is a real number (works when Im[x] is essentially 0) *)
@@ -110,9 +122,22 @@ IsDivisible[num1_, num2_, tol_ : 10^-10] :=
 
 
 
+NormDistList//ClearAll;
+
 (* Returns a range of numbers from xMin to xMax where the points are 
-distributed according to a Normal Distribution centered on xFocus *)
-NormDistList[xMin_, xMax_, xFocus_, \[CapitalDelta]x_, \[CapitalDelta]xmin_, width_ : "half"] :=
+distributed according to a Normal Distribution centered on xFocus/xFoci *)
+NormDistList[xMin_, xMax_, xFoci_?ListQ, \[CapitalDelta]x_, \[CapitalDelta]xmin_, width_ : "half",round_:Null] :=Union[Flatten[
+NormDistList[
+If[#==1,xMin,Mean[xFoci[[#-1;;#]]]],If[#==Length[xFoci],xMax,Mean[xFoci[[#;;#+1]]]],
+xFoci[[#]],
+\[CapitalDelta]x, 
+\[CapitalDelta]xmin,
+ If[width == "half", (xMax - xMin)/4,(*else*)width],
+round
+]&/@Range[Length[xFoci]]
+]]
+
+NormDistList[xMin_, xMax_, xFocus_?NumericQ, \[CapitalDelta]x_, \[CapitalDelta]xmin_, width_ : "half",round_:Null] :=
   Module[{xi, dist, factor, w, x, left = {}, right = {}},
   (*Define a Normal Distribution centered on xFocus*)
   w = If[width == "half", (xMax - xMin)/4,(*else*)width];
@@ -143,6 +168,11 @@ NormDistList[xMin_, xMax_, xFocus_, \[CapitalDelta]x_, \[CapitalDelta]xmin_, wid
    right = 
      Rescale[right, {right[[1]], right[[-1]]}, {right[[1]], xMax}];
    ];
+
+If[NumericQ[round],
+left=Round[left,round];
+right=Round[right,round];
+];
   
   Union[left, right]
   ]
